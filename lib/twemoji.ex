@@ -40,7 +40,7 @@ defmodule Twemoji do
           [] ->
             data
 
-          _ = emoji ->
+          emoji ->
             emoji
             |> Enum.map(fn em ->
               %{
