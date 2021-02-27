@@ -27,7 +27,7 @@ end
 ```elixir
 iex> Twemoji.parse("Twemoji in Elixir 🎉")
 "Twemoji in Elixir <img draggable=\"false\" class=\"twemoji\" alt=\"party popper\" aria-label=\"party popper\" src=\"https://twemoji.maxcdn.com/2/72x72/1f389.png\"/>"
-iex>Twemoji.parse_as_ast("Twemoji in Elixir 🎉")
+iex> Twemoji.parse_as_ast("Twemoji in Elixir 🎉")
 {:ok,
  [
    "Twemoji in Elixir ",
