@@ -1,0 +1,8 @@
+%{
+  "castore": {:hex, :castore, "0.1.9", "eb08a94c12ebff92a92d844c6ccd90728dc7662aab9bdc8b3b785ba653c499d5", [:mix], [], "hexpm", "99c3a38ad9c0bab03fee1418c98390da1a31f3b85e317db5840d51a1443d26c8"},
+  "emojix": {:hex, :emojix, "0.3.0", "ee803f60adc278c2f39194ac70091568b65383c29d1d8919e3af12a2d188b4f1", [:mix], [{:castore, "~> 0.1.0", [hex: :castore, repo: "hexpm", optional: false]}, {:jason, "~> 1.1", [hex: :jason, repo: "hexpm", optional: false]}, {:mint, "~> 0.4.0", [hex: :mint, repo: "hexpm", optional: false]}], "hexpm", "0069ad4a6620cfc6ee8aba14811cc98e235fc1c30224e5f77c25a8295b516cff"},
+  "floki": {:hex, :floki, "0.30.0", "22ebbe681a5d3777cdd830ca091b1b806d33c3449c26312eadca7f7be685c0c8", [:mix], [{:html_entities, "~> 0.5.0", [hex: :html_entities, repo: "hexpm", optional: false]}], "hexpm", "a9e128a4ca9bb71f11affa315b6768a9ad326d5996ff1e92acf1d7a01a10076a"},
+  "html_entities": {:hex, :html_entities, "0.5.2", "9e47e70598da7de2a9ff6af8758399251db6dbb7eebe2b013f2bbd2515895c3c", [:mix], [], "hexpm", "c53ba390403485615623b9531e97696f076ed415e8d8058b1dbaa28181f4fdcc"},
+  "jason": {:hex, :jason, "1.2.2", "ba43e3f2709fd1aa1dce90aaabfd039d000469c05c56f0b8e31978e03fa39052", [:mix], [{:decimal, "~> 1.0 or ~> 2.0", [hex: :decimal, repo: "hexpm", optional: true]}], "hexpm", "18a228f5f0058ee183f29f9eae0805c6e59d61c3b006760668d8d18ff0d12179"},
+  "mint": {:hex, :mint, "0.4.0", "b93a10192957624ed4a8b8641eff1819019c36487bdf49e2b505afd2cc9b7911", [:mix], [{:castore, "~> 0.1.0", [hex: :castore, repo: "hexpm", optional: true]}], "hexpm", "7957910c271f6a5df20b7ee61a64d74db4475641aed89076def4cbeb778ac9b4"},
+}
