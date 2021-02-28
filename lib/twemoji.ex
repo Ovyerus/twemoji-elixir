@@ -71,46 +71,39 @@ defmodule Twemoji do
 
       data when is_binary(data) ->
         data
-        |> Emojix.scan()
-        |> case do
-          [] ->
-            data
+        |> String.graphemes()
+        |> Enum.map(fn glyph ->
+          case Emojix.find_by_unicode(glyph) do
+            %Emojix.Emoji{} = emoji ->
+              process_emoji(emoji)
 
-          emoji ->
-            emoji
-            |> Enum.map(fn em ->
-              %{
-                point: String.downcase(em.hexcode),
-                description: em.description,
-                re: Regex.compile!(em.unicode)
-              }
-            end)
-            |> Enum.map(&process_emoji(&1, data))
-        end
+            nil ->
+              glyph
+          end
+        end)
+        |> Enum.chunk_by(&is_binary(&1))
+        |> Enum.reduce([], fn val, acc ->
+          cond do
+            # Better way to do this without appending?
+            Enum.all?(val, &is_binary(&1)) -> acc ++ [Enum.join(val)]
+            # Flattens the chunked list.
+            true -> acc ++ val
+          end
+        end)
     end)
   end
 
   defp process_ast([]), do: []
 
-  defp process_emoji(emoji, input) do
-    input
-    |> String.split(emoji.re, include_captures: true, trim: true)
-    |> Enum.map(fn part ->
-      cond do
-        Regex.match?(emoji.re, part) ->
-          {"img",
-           [
-             {"draggable", "false"},
-             {"class", "twemoji"},
-             {"alt", emoji.description},
-             {"aria-label", emoji.description},
-             {"src", to_cdn(emoji.point)}
-           ], []}
-
-        true ->
-          part
-      end
-    end)
+  defp process_emoji(emoji) do
+    {"img",
+     [
+       {"draggable", "false"},
+       {"class", "twemoji"},
+       {"alt", emoji.description},
+       {"aria-label", emoji.description},
+       {"src", emoji.hexcode |> String.downcase() |> to_cdn()}
+     ], []}
   end
 
   # Helpers
