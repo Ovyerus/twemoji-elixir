@@ -24,6 +24,8 @@ end
 
 ## Usage
 
+### From string
+
 ```elixir
 iex> Twemoji.parse("Twemoji in Elixir 🎉")
 "Twemoji in Elixir <img draggable=\"false\" class=\"twemoji\" alt=\"party popper\" aria-label=\"party popper\" src=\"https://twemoji.maxcdn.com/2/72x72/1f389.png\"/>"
@@ -40,7 +42,69 @@ iex> Twemoji.parse_as_ast("Twemoji in Elixir 🎉")
       {"src", "https://twemoji.maxcdn.com/2/72x72/1f389.png"}
     ], []}
  ]}
-)
+# Can also control AST output format (:floki (default), or :earmark)
+iex> Twemoji.parse_as_ast("Twemoji in Elixir 🎉", format: :earmark)
+{:ok,
+ [
+   "Twemoji in Elixir ",
+   {"img",
+    [
+      {"draggable", "false"},
+      {"class", "twemoji"},
+      {"alt", "party popper"},
+      {"aria-label", "party popper"},
+      {"src", "https://twemoji.maxcdn.com/2/72x72/1f389.png"}
+    ], [], %{}}
+ ]}
+```
+
+### From AST
+
+#### Floki
+
+```elixir
+iex> {:ok, x} = Floki.parse_fragment("Twemoji in Elixir 🎉")
+{:ok, ["Twemoji in Elixir 🎉"]}
+iex> Twemoji.parse(x)
+"Twemoji in Elixir <img draggable=\"false\" class=\"twemoji\" alt=\"party popper\" aria-label=\"party popper\" src=\"https://twemoji.maxcdn.com/2/72x72/1f389.png\"/>"
+iex> Twemoji.parse_as_ast(x)
+{:ok,
+ [
+   "Twemoji in Elixir ",
+   {"img",
+    [
+      {"draggable", "false"},
+      {"class", "twemoji"},
+      {"alt", "party popper"},
+      {"aria-label", "party popper"},
+      {"src", "https://twemoji.maxcdn.com/2/72x72/1f389.png"}
+    ], []}
+ ]}
+```
+
+#### Earmark
+
+```elixir
+iex> {:ok, x, _} = EarmarkParser.as_ast("Twemoji in Elixir 🎉")
+{:ok, [{"p", [], ["Twemoji in Elixir ­🎉"], %{}}], []}
+iex> Twemoji.parse(x)
+"<p>Twemoji in Elixir <img draggable=\"false\" class=\"twemoji\" alt=\"party popper\" aria-label=\"party popper\" src=\"https://twemoji.maxcdn.com/2/72x72/1f389.png\"/></p>"
+iex> Twemoji.parse_as_ast(x, format: :earmark)
+{:ok,
+ [
+   {"p", [],
+    [
+      "Twemoji in Elixir ",
+      {"img",
+       [
+         {"draggable", "false"},
+         {"class", "twemoji"},
+         {"alt", "party popper"},
+         {"aria-label", "party popper"},
+         {"src", "https://twemoji.maxcdn.com/2/72x72/1f389.png"}
+       ], [], %{}}
+    ], %{}}
+ ]}
 ```
 
 ## License
